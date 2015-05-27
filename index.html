@@ -23,7 +23,7 @@
 
 $(function() 
 {
-	var dmJSON = "http://test.hiskenya.org/api/organisationUnits.jsonp?paging=false&fields=href,name,id,code&query=County&callback=?";
+	var dmJSON = "http://test.hiskenya.org/api/organisationUnits.jsonp?paging=false&query=county&callback=?";
 	   $.getJSON( dmJSON, function(data) 
 	   {
 			$.each(data.organisationUnits, function(s, g) 
@@ -31,27 +31,30 @@ $(function()
 				if(g.code<=58){
 
 					var tblRow = "<tr>" + "<td>" + g.id + "</td>" + "<td>" + g.name + "</td>" +"<td>" + g.href + "</td>"+ "</tr>"
-					//$.post("http://localhost/db/county.php", {county_id: g.id,county_name:g.name,href:g.href,submit:"submit"}, function(result){
+					$(tblRow).appendTo("#entrydata tbody");  
+				 
+				 //$.post("http://localhost/db/county.php", {county_id: g.id,county_name:g.name,href:g.href,submit:"submit"}, function(result){
         //$("span").html(result);
     //});//jquery post function
 
-				$(tblRow).appendTo("#entrydata tbody");  
-				 
+
 				}
 
-		
+			
 
 				
 });
-			$(document).ready(function()
+		
+	$(document).ready(function()
 	{
 		$("#entrydata").dataTable(
 		{
 
 		});
-	});
+	});	
 
 });
+	   	
  	
 });
 
@@ -68,11 +71,12 @@ $(function()
         <th>ID</th>
         <th>Name</th>
         <th>URL</th>
+         
     </thead>
   <tbody>
 
    </tbody>
-   <tfoot class="Danger">
+   <tfoot class="Danger" style="background-color:grey">
             <tr>
                 <th>ID</th>
                 <th>Name</th>
