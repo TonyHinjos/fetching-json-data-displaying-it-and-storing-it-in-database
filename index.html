@@ -31,11 +31,43 @@ $(function()
 				if(g.code<=58){
 
 					var tblRow = "<tr>" + "<td>" + g.id + "</td>" + "<td>" + g.name + "</td>" +"<td>" + g.href + "</td>"+ "</tr>"
+<<<<<<< HEAD
 					$(tblRow).appendTo("#entrydata tbody");  
 				 
 				 //$.post("http://localhost/db/county.php", {county_id: g.id,county_name:g.name,href:g.href,submit:"submit"}, function(result){
         //$("span").html(result);
+=======
+					//$.post("http://localhost/db/county.php", {county_id: g.id,county_name:g.name,href:g.href,submit:"submit"}, function(result){
+        
+>>>>>>> 0feb1aab7dacaaaf16e3c85d8e0a78ceae8584ce
     //});//jquery post function
+    var subCounty =g.href;
+    $.getJSON(subCounty,function(data1){
+    	$.each(data1.organisationUnits,function(s1,g1){
+    		var tblRow1 = "<tr>" + "<td>" + g1.id + "</td>" + "<td>" + g1.name + "</td>" +"<td>" + g1.href + "</td>"+ "</tr>"
+    		//$.post("http://localhost/db/sub_county.php", {county_id: g.id,sub_county_id: g1.id,sub_county_name:g1.name,href:g1.href,submit:"submit"}, function(result){
+        
+    //});//jquery post function
+    	
+    	
+    	 var orgUnit =g1.href;
+    $.getJSON(orgUnit,function(data2){
+    	$.each(data2.organisationUnits,function(s2,g2){
+    		var tblRow2 = "<tr>" + "<td>" + g2.id + "</td>" + "<td>" + g2.name + "</td>" +"<td>" + g2.href + "</td>"+ "</tr>"
+    		//$.post("http://localhost/db/org_unit.php", {sub_county_id: g1.id,org_id:g2.id,org_name:g2.name,href:g2.href,submit:"submit"}, function(result){
+        
+    //});//jquery post function
+    	
+    		
+    	});
+    	$(tblRow1).appendTo("#entrydata tbody");  
+    });
+    	
+    	
+    		
+    	});
+    	$(tblRow1).appendTo("#entrydata tbody");  
+    });
 
 
 				}
