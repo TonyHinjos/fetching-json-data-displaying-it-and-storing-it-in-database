@@ -5,89 +5,74 @@
 <title>JQUERY DATA TABLE</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<script src="script/jquery-1.11.3.min.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="bootstrap-3.3.4/css/bootstrap.min.css"> 
-
-<!-- jQuery -->
-<script type="text/javascript" charset="utf8" src="DataTables-1.10.7/media/js/jquery.js"></script>  
-<!-- DataTables -->
-<script type="text/javascript" charset="utf8" src="DataTables-1.10.7/media/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="bootstrap-3.3.4/js/bootstrap.min.js"></script>  
 
-<script src="script/jquery-1.11.3.min.js" type="text/javascript"></script>
-<!-- DataTables CSS -->
-<link rel="stylesheet" type="text/css" href="DataTables-1.10.7/media/css/jquery.dataTables.css">  
 
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="DataTables-1.10.7/media/css/jquery.dataTables.css">
+<!-- jQuery -->
+<script type="text/javascript" charset="utf8" src="DataTables-1.10.7/media/js/jquery.js"></script>   
+<!-- DataTables --> 
+<script type="text/javascript" charset="utf8" src="DataTables-1.10.7/media/js/jquery.dataTables.js"></script>
 
 <script>
 
 $(function() 
 {
-	var dmJSON = "http://test.hiskenya.org/api/organisationUnits.jsonp?paging=false&query=county&callback=?";
+	 var dmJSON = "http://test.hiskenya.org/api/organisationUnits.jsonp?paging=false&query=county&callback=?";
 	   $.getJSON( dmJSON, function(data) 
-	   {
+    {
 			$.each(data.organisationUnits, function(s, g) 
 			{
-				if(g.code<=58){
+				if(g.code<=58)
+				{
+                  var tblRow = "<tr>" + "<td>" + g.id + "</td>" + "<td>" + g.name + "</td>" +"<td>" + g.href + "</td>"+ "</tr>"
+                  $(tblRow).appendTo("#entrydata tbody");  
+				 // $.post("http://localhost/db/county.php", {county_id: g.id,county_name:g.name,href:g.href,submit:"submit"},function(result){});//jquery post function
 
-					var tblRow = "<tr>" + "<td>" + g.id + "</td>" + "<td>" + g.name + "</td>" +"<td>" + g.href + "</td>"+ "</tr>"
-<<<<<<< HEAD
-					$(tblRow).appendTo("#entrydata tbody");  
-				 
-				 //$.post("http://localhost/db/county.php", {county_id: g.id,county_name:g.name,href:g.href,submit:"submit"}, function(result){
-        //$("span").html(result);
-=======
-					//$.post("http://localhost/db/county.php", {county_id: g.id,county_name:g.name,href:g.href,submit:"submit"}, function(result){
-        
->>>>>>> 0feb1aab7dacaaaf16e3c85d8e0a78ceae8584ce
-    //});//jquery post function
-    var subCounty =g.href;
-    $.getJSON(subCounty,function(data1){
-    	$.each(data1.organisationUnits,function(s1,g1){
-    		var tblRow1 = "<tr>" + "<td>" + g1.id + "</td>" + "<td>" + g1.name + "</td>" +"<td>" + g1.href + "</td>"+ "</tr>"
-    		//$.post("http://localhost/db/sub_county.php", {county_id: g.id,sub_county_id: g1.id,sub_county_name:g1.name,href:g1.href,submit:"submit"}, function(result){
-        
-    //});//jquery post function
-    	
-    	
-    	 var orgUnit =g1.href;
-    $.getJSON(orgUnit,function(data2){
-    	$.each(data2.organisationUnits,function(s2,g2){
-    		var tblRow2 = "<tr>" + "<td>" + g2.id + "</td>" + "<td>" + g2.name + "</td>" +"<td>" + g2.href + "</td>"+ "</tr>"
-    		//$.post("http://localhost/db/org_unit.php", {sub_county_id: g1.id,org_id:g2.id,org_name:g2.name,href:g2.href,submit:"submit"}, function(result){
-        
-    //});//jquery post function
-    	
-    		
-    	});
-    	$(tblRow1).appendTo("#entrydata tbody");  
-    });
-    	
-    	
-    		
-    	});
-    	$(tblRow1).appendTo("#entrydata tbody");  
-    });
-
-
+                 var subCounty =g.href+".jsonp?callback=?";
+                 $.getJSON(subCounty,function(data1)
+                {
+    	             $.each(data1.organisationUnits,function(s1,g1)
+    	            {
+    		         var tblRow1 = "<tr>" + "<td>" + g1.id + "</td>" + "<td>" + g1.name + "</td>" +"<td>" + g1.href + "</td>"+ "</tr>"
+    		          
+    		        // $.post("http://localhost/db/sub_county.php", {county_id: g.id,sub_county_id: g1.id,sub_county_name:g1.name,href:g1.href,submit:"submit"}, function(result){ });//jquery post function
+    	          
+    	         var orgUnit =g1.href+".jsonp?callback=?";
+                 $.getJSON(orgUnit,function(data2)
+                {
+    	          $.each(data2.organisationUnits,function(s2,g2)
+    	            {
+    		         var tblRow2 = "<tr>" + "<td>" + g2.id + "</td>" + "<td>" + g2.name + "</td>" +"<td>" + g2.href + "</td>"+ "</tr>"
+    		           
+    		        // $.post("http://localhost/db/org_unit.php", {sub_county_id: g1.id,org_id:g2.id,org_name:g2.name,href:g2.href,submit:"submit"}, function(result){});//jquery post function
+    		      });
+    		      $(tblRow1).appendTo("#entrydata tbody");
+    	        });
+    	            });
+                   $(tblRow2).appendTo("#entrydata tbody");
+    	        });
+    	  
 				}
 
-			
 
-				
-});
+
+		    });
+            $(document).ready(function()
+	        {
+		     $("#entrydata").dataTable(
+		        {
+
+		        });
+	        });	
 		
-	$(document).ready(function()
-	{
-		$("#entrydata").dataTable(
-		{
-
-		});
-	});	
-
-});
+	    
+   });
 	   	
- 	
 });
 
 
